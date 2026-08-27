@@ -1,0 +1,8 @@
+{
+  "appId": "com.loramine.simple",
+  "appName": "LORAMINE",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true
+  }
+}
