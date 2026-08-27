@@ -17,8 +17,23 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Extract Android project if needed
+        run: |
+          if [ ! -d android ]; then
+            zipfile=$(ls *.zip | head -n 1)
+            echo "Extracting $zipfile"
+            unzip -q "$zipfile"
+            if [ -d loramine/android ]; then
+              mv loramine/android android
+            elif [ -d loramine_android_project/android ]; then
+              mv loramine_android_project/android android
+            fi
+          fi
+          test -f android/gradlew && echo "gradlew found" || (echo "gradlew still missing" && exit 1)
+
       - name: Grant execute permission for gradlew
-        run: chmod +x android/gradlew
+        working-directory: android
+        run: chmod +x gradlew
 
       - name: Build debug APK
         working-directory: android
